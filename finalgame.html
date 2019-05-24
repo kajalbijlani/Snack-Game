@@ -1,0 +1,299 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+//init object globally
+var objImage = null;
+
+    function init() {
+        objImage = document.getElementById("image1");
+        var x = $(objImage).position();
+    }
+
+    function findimg() {
+
+        var id = $('#maindiv').find('img[src="user.png"]')
+            .parent('div')
+            .attr('class')
+
+        var id1 = $('#maindiv').find('img[src="user.png"]')
+            .parent('div')
+            .parent('div')
+            .attr('class');
+
+        return { "row": id1, "column": id };
+    }
+    function findcake() {
+
+                var id = $('#maindiv').find('img[src="cake.jpg"]')
+                    .parent('div')
+                    .attr('class')
+
+                var id1 = $('#maindiv').find('img[src="cake.jpg"]')
+                    .parent('div')
+                    .parent('div')
+                    .attr('class');
+
+                return { "row": id1, "column": id };
+    }
+   function randomLoc(){
+                var rows=4;
+                var column=7;
+                var rowToMove = Math.floor(Math.random() * rows) + 1;
+                var colToMove = Math.floor(Math.random() * column) + 1;
+                console.log("newPOs", rowToMove, colToMove);
+                var newrow="tab-row"+rowToMove;
+                var newcol="cell"+colToMove;
+                var ans= $("." + newcol, "." + newrow).html("<img id='image2' src='cake.jpg' height='25px' width='25px'/>");
+                console.log(ans);
+            }
+
+
+    function getKeyAndMove(e) {
+        var key_code = e.which || e.keyCode;
+        switch (key_code) {
+            case 37: //left arrow key
+                moveLeft();
+                break;
+            case 38: //Up arrow key
+
+                moveUp();
+                break;
+            case 39: //right arrow key
+                moveRight();
+                break;
+            case 40: //down arrow key
+                moveDown();
+                break;
+        }
+    }
+
+
+    function moveLeft() {
+                    var findImg = findimg();
+                    var cell=findImg.column;
+                    var len=cell.length;
+                    var res1 = cell.substring(len-1);
+                    var res2 = cell.substring(0,len-1);
+                    console.log(res1);
+                    if(res1==1){
+                        document.getElementById('xyz').play();
+                        alert("cant move");
+                    }
+                    else{
+                            var res= res1-1;
+                            console.log(res);
+                            var newCell=res2+res;
+                            console.log(newCell);
+                            var row=findImg.row;
+                            var col=findImg.column;
+                            var cakeimg=findcake();
+                            var players=$("."+col, "."+row).html();
+                            console.log(players);
+                            
+                            $("."+col, "."+row).html("");
+                            $("."+newCell, "."+row).html(players);
+
+                            if(cakeimg.row==row && cakeimg.column==newCell){
+                                console.log("match");
+                                randomLoc();
+                            }
+                    }
+
+    }
+    function moveUp() {
+                    var f = findimg();
+                    var cell=f.row;
+                    var len=cell.length;
+                    console.log(len);
+
+                    var res1 = cell.substring(len-1);
+                    var res2 = cell.substring(0,len-1);
+                    console.log(res1);
+                    var no=parseInt(res1);
+                    if(res1==1){
+                        document.getElementById('xyz').play();
+                        alert("cant move");
+                    }
+                    else{
+                            var res= no-1;
+                            console.log(res);
+                            var rep=res2+res;
+                            console.log(rep);
+                            var row=f.row;
+                            var col=f.column;
+                            var cakeimg=findcake();
+                            var players=$("."+col, "."+row).html();
+                            console.log(players);
+                            
+                            $("."+col, "."+row).html("");
+                            $("."+col, "."+rep).html(players);
+                            if(cakeimg.row==rep && cakeimg.column==col){
+                                console.log("match");
+                                randomLoc();
+                            }
+                            
+
+                        }
+    }
+    function moveRight() {
+                        var f = findimg();
+                        var cell=f.column;
+                        var len=cell.length;
+                        console.log(len);
+
+                        var res1 = cell.substring(len-1);
+                        var res2 = cell.substring(0,len-1);
+                        console.log(res1);
+                        var no=parseInt(res1);
+                        if(res1==7){
+                            document.getElementById('xyz').play();
+                            alert("cant move");
+                        }
+                        else{
+                                var res= no+1;
+                                console.log(res);
+                                var rep=res2+res;
+                                console.log(rep);
+                                var row=f.row;
+                                var col=f.column;
+                                var cakeimg=findcake();
+                                var players=$("."+col, "."+row).html();
+                                console.log(players);    
+                                $("."+col, "."+row).html("");
+                                $("."+rep, "."+row).html(players);
+                                if(cakeimg.row==row && cakeimg.column==rep){
+                                    console.log("match");
+                                    randomLoc();
+                            
+                                }
+                         }  
+    }
+    function moveDown() {
+                        var f = findimg();
+                        var cell=f.row;
+                        var len=cell.length;
+                        console.log(len);
+
+                        var res1 = cell.substring(len-1);
+                        var res2 = cell.substring(0,len-1);
+                        console.log("res",res1);
+                        var no=parseInt(res1);
+                        if(res1==4){
+                            document.getElementById('xyz').play();
+                            alert("cant move");
+                        }
+                        else{
+                                var res= no+1;
+                                console.log(res);
+                                var rep=res2+res;
+                                console.log(rep);
+                                var row=f.row;
+                                var col=f.column;
+                                var players=$("."+col, "."+row).html();
+                                console.log(players);
+
+                                var cakeimg=findcake();
+                                $("."+col, "."+row).html("");
+                                $("."+col, "."+rep).html(players);
+
+                                console.log("cake row",cakeimg.row);
+                                console.log(rep);
+                                console.log(col)
+                                var rows=4;
+                                var coloum=7;
+                                
+                                if(cakeimg.row==rep && cakeimg.column==col){
+                                    console.log("match");
+                                    randomLoc();
+                                }
+                                    
+                         }
+    }
+       
+    
+    window.onload = init;
+</script>
+</head>
+
+<style>
+.div-table {
+        background-color: #EEEEEE;
+        float: left;
+        padding: 30px;
+        width: auto;
+}
+
+.tab-row1,.tab-row2,.tab-row3,.tab-row4 {
+    float: left;
+    width: 800px;
+}
+
+.cell1,.cell2,.cell3,.cell4,.cell5,.cell6,.cell7 {
+    border: 1px solid;
+    float: left;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+}
+
+
+.container {
+    position: relative;
+}
+
+#maindiv {
+    height: 200px;
+    width: 400px;
+    position: absolute;
+    top: 10px;
+}
+</style>
+
+<body onkeydown='getKeyAndMove(event)'>
+    <audio id="xyz" src="buzzer.wav" preload="auto"></audio>
+
+    <div id="maindiv">
+        <div class="tab-row1">
+            <div class="cell1"></div>
+            <div class="cell2"></div>
+            <div class="cell3"></div>
+            <div class="cell4"></div>
+            <div class="cell5"></div>
+            <div class="cell6"></div>
+            <div class="cell7"></div>
+        </div>
+
+        <div class="tab-row2">
+            <div class="cell1"></div>
+            <div class="cell2"></div>
+            <div class="cell3"></div>
+            <div class="cell4"></div>
+            <div class="cell5"></div>
+            <div class="cell6"></div>
+            <div class="cell7"></div>
+        </div>
+
+        <div class="tab-row3">
+            <div class="cell1"></div>
+            <div class="cell2"></div>
+            <div class="cell3"></div>
+            <div class="cell4"></div>
+            <div class="cell5"><img id="image1" src="user.png" alt="" height="25px" width="25" /></div>
+            <div class="cell6"></div>
+            <div class="cell7"></div>
+        </div>
+
+        <div class="tab-row4">
+            <div class="cell1"></div>
+            <div class="cell2"></div>
+            <div class="cell3"></div>
+            <div class="cell4"><img id="image2" src="cake.jpg" alt="" height="25px" width="25" /></div>
+            <div class="cell5"></div>
+            <div class="cell6"></div>
+            <div class="cell7"></div>
+        </div>
+    </div>
+</body>
+
+</html>
